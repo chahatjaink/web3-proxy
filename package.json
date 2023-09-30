@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "name": "web3-provider-proxy",
+  "version": "1.0.0",
+  "description": "A template for kick starting a Cloudflare Workers project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --require ./app/openTelemetry/openTelemetry.js ./app/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "Raymond Jacobson <ray@audius.co>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "prettier": "^1.18.2",
+    "wrangler": "^3.5.1"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.0.2",
+    "@opentelemetry/exporter-jaeger": "^0.25.0",
+    "@opentelemetry/exporter-prometheus": "^0.43.0",
+    "@opentelemetry/resources": "^0.25.0",
+    "@opentelemetry/sdk-node": "^0.43.0",
+    "@opentelemetry/sdk-trace-base": "^0.25.0",
+    "@opentelemetry/semantic-conventions": "^0.25.0",
+    "agentkeepalive": "^4.5.0",
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "free-proxy": "^0.2.1",
+    "http": "^0.0.1-security",
+    "prom-client": "^14.2.0",
+    "util": "^0.12.5"
+  }
+}

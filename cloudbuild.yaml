@@ -1,0 +1,51 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+steps:
+  #CACHE
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      ['-c', 'docker pull $_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest || exit 0']
+    id: Cache
+
+  # BUILD
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '-t'
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
+      - '--cache-from'
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
+      - .
+      - '-f'
+      - Dockerfile
+    id: Build
+
+  # PUSH
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+    id: Push
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
+    id: Push-latest
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: updating MIGs default backend
+    entrypoint: /bin/bash
+    args:
+      - -c
+      - |
+        gcloud compute instance-groups managed rolling-action replace ${_SERVICE_NAME1} --region='${_MIG_REGION}' --max-surge=3 --max-unavailable=0
+        gcloud compute instance-groups managed rolling-action replace ${_SERVICE_NAME2} --region='${_MIG_REGION}' --max-surge=3 --max-unavailable=0
+        gcloud compute instance-groups managed rolling-action replace ${_SERVICE_NAME3} --region='${_MIG_REGION}' --max-surge=3 --max-unavailable=0
+        gcloud compute instance-groups managed rolling-action replace ${_SERVICE_NAME4} --region='${_MIG_REGION}' --max-surge=3 --max-unavailable=0
+
+
+        

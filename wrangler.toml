@@ -1,0 +1,13 @@
+[env.arbitrum]
+main = "index.js"
+name = "arbitrum-one-rpc"
+type = "javascript"
+workers_dev = true
+route = "https://arbitrum-one-rpc.alfred.capital"
+compatibility_date = "2023-08-02"
+[vars]
+EDGE_CACHE_TTL = 1
+BROWSER_CACHE_TTL = 1
+PROVIDERS = '["https://arb1.croswap.com/rpc", "https://arb-mainnet-public.unifra.io", "https://endpoints.omniatech.io/v1/arbitrum/one/public", "https://1rpc.io/arb", "https://arbitrum-one.public.blastapi.io", "https://arbitrum.meowrpc.com", "https://rpc.ankr.com/arbitrum", "https://arbitrum.blockpi.network/v1/rpc/public", "https://arb1.arbitrum.io/rpc"]'
+PROVIDER_TIMEOUT = 2000
+
